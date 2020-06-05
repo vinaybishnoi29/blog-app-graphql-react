@@ -1,1 +1,1 @@
-# blog-app-graphql-react
+# graphql-react-blog-app
