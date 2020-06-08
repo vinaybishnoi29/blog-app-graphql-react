@@ -3,11 +3,13 @@ import { IResolvers } from 'graphql-tools';
 import getFirebase from './firebase';
 
 const Query = {
+    /**
+     * Gets all the posts
+     * 
+     * @return {Post[]} Returns Array of Posts
+    */
     posts: (): Post[] => {
-        let posts = null;
-    
-        // Read posts
-        posts = getFirebase()
+        let posts: Post[] = getFirebase()
             .database()
             .ref("/posts")
             .once("value")
@@ -29,30 +31,43 @@ const Query = {
         return posts;
       },
     
-      post: (_:void, args: ID): Post => {
-        console.log(args);
-        const {id} = args;
-        let current: Post = {
-            id: "",
-            title: "",
-            content: ""
-        };
-        // Read posts
-        let post = getFirebase()
-            .database()
-            .ref("/posts")
-            .once("value")
-            .then((snapshot: any) => {
-                const snapshotVal = snapshot.val();
-                current = snapshotVal[id];
-                current.id = id;
-                return current;
-            });
-        return post;
-      }
+    /**
+     * Gets a post based on ID
+     * 
+     * @param {void} _ - Blank
+     * @param {ID} args - Id of the post to be fetched
+     * @return {Post} Returns a Post
+    */
+    post: (_:void, args: ID): Post => {
+    const {id} = args;
+    let current: Post = {
+        id: "",
+        title: "",
+        content: ""
+    };
+    let post = getFirebase()
+        .database()
+        .ref("/posts")
+        .once("value")
+        .then((snapshot: any) => {
+            const snapshotVal = snapshot.val();
+            current = snapshotVal[id];
+            current.id = id;
+            return current;
+        });
+    return post;
+    }
 };
 
 const Mutation = {
+    /**
+     * Creates a new post
+     * 
+     * @param {void} _ - Blank
+     * @param {any} args - Input arguments for post creation
+     * @return {Post} Returns newly created post
+     *
+    */
     createPost: (_:void, args: any): Post => {
         const {title, content} = args;
     
@@ -76,6 +91,14 @@ const Mutation = {
         return newPost;
       },
     
+    /**
+     * Updates an existing post
+     * 
+     * @param {void} _ - Blank
+     * @param {any} args - Input arguments for post creation
+     * @return {Post} Returns updated post
+     *
+    */
     updatePost: (_:void, args:Post): Post => {
     const {id, title, content} = args;
     const newPost: Post = {
@@ -96,10 +119,16 @@ const Mutation = {
     return newPost;
     },
 
+    /**
+     * Deletes an existing post based on id
+     * 
+     * @param {void} _ - Blank
+     * @param {ID} args - Id of the post to be deleted
+     * @return {string} Returns deletion status
+     *
+    */
     deletePost: async (_:void, args:ID) => {
     const {id} = args;
-    // var updates = {};
-    // updates[`/posts/${id}`] = null;
         getFirebase()
         .database()
         .ref(`/posts/${id}`)
