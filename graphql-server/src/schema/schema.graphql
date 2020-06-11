@@ -9,6 +9,7 @@ type Post {
 }
 type Status {
   status: String
+  id: String
 }
 
 type Mutation {

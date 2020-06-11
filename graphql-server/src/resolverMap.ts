@@ -1,10 +1,10 @@
-import { ID, Post } from './models';
+import { ID, Post, Status } from './models';
 import { IResolvers } from 'graphql-tools';
 import getFirebase from './firebase';
 
 const Query = {
     /**
-     * Gets all the posts
+     * @description Gets all the posts
      * 
      * @return {Post[]} Returns Array of Posts
     */
@@ -32,7 +32,7 @@ const Query = {
       },
     
     /**
-     * Gets a post based on ID
+     * @description Gets a post based on ID
      * 
      * @param {void} _ - Blank
      * @param {ID} args - Id of the post to be fetched
@@ -61,14 +61,14 @@ const Query = {
 
 const Mutation = {
     /**
-     * Creates a new post
+     * @description Creates a new post
      * 
      * @param {void} _ - Blank
-     * @param {any} args - Input arguments for post creation
+     * @param {Post} args - Input arguments for post creation
      * @return {Post} Returns newly created post
      *
     */
-    createPost: (_:void, args: any): Post => {
+    createPost: (_:void, args: Post): Post => {
         const {title, content} = args;
     
         // Get a key for a new Post.
@@ -88,14 +88,15 @@ const Mutation = {
                   .then((response: any) => {
                     return response;
                   });
+
         return newPost;
       },
     
     /**
-     * Updates an existing post
+     * @description Updates an existing post
      * 
      * @param {void} _ - Blank
-     * @param {any} args - Input arguments for post creation
+     * @param {Post} args - Input arguments for post creation
      * @return {Post} Returns updated post
      *
     */
@@ -107,7 +108,7 @@ const Mutation = {
         content
     }
 
-    var updates: any = {};
+    let updates: any = {};
     updates[`/posts/${id}`] = newPost;
     let resp = getFirebase()
                 .database()
@@ -120,20 +121,23 @@ const Mutation = {
     },
 
     /**
-     * Deletes an existing post based on id
+     * @description Deletes an existing post based on id
      * 
      * @param {void} _ - Blank
      * @param {ID} args - Id of the post to be deleted
      * @return {string} Returns deletion status
      *
     */
-    deletePost: async (_:void, args:ID) => {
-    const {id} = args;
+    deletePost: (_:void, args:ID): Status => {
+      const {id} = args;
         getFirebase()
         .database()
         .ref(`/posts/${id}`)
         .remove();
-    return 'record del';
+      return {
+        id: id,
+        status: 'Deleted'
+      };
     }
 };
 
