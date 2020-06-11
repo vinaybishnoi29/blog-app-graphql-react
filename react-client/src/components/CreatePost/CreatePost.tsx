@@ -1,15 +1,18 @@
 import React, { useReducer, useEffect } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
-import { loadPost } from "../../global/request";
+import { fetchPost } from "../../global/request";
 import { useLocation, useParams } from "react-router-dom";
+import './CreatePost.css';
 import { usePost } from "../../global/hooks";
+import BackButton from '../../global/atoms/BackButton';
 import {
   EDIT_POST_LABEL,
   NEW_POST_LABEL,
   TITLE_LABEL,
   CONTENT_LABEL,
   SUBMIT_BUTTON_LABEL,
-} from "../../global/constants"
+  EDIT_MODE
+} from "../../global/constants";
 
 interface State {
   title: string;
@@ -50,7 +53,7 @@ const CreatePost: React.FC = () => {
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log("clicked", state);
-    if (mode === "edit") {
+    if (mode && mode === EDIT_MODE) {
       updatePost(postId, state.title, state.content);
     } else {
       createPost(state.title, state.content);
@@ -58,15 +61,15 @@ const CreatePost: React.FC = () => {
   };
 
   useEffect(() => {
-    if (mode && mode === "edit") {
-      loadPost(postId).then((post) => {
+    if (mode && mode === EDIT_MODE) {
+      fetchPost(postId).then((post) => {
         dispatch({ field: "title", value: post.title });
         dispatch({ field: "content", value: post.content });
       });
     }
   }, [mode, postId]);
 
-  const heading = mode === "edit" ? EDIT_POST_LABEL : NEW_POST_LABEL;
+  const heading = mode === EDIT_MODE ? EDIT_POST_LABEL : NEW_POST_LABEL;
   return (
     <section>
       <h1 className="title">{heading}</h1>
@@ -99,13 +102,15 @@ const CreatePost: React.FC = () => {
           <div className="field">
             <div className="control">
               <Button
-                color="primary"
+                className="button_submit"
+                color="info"
                 outline
                 onClick={handleSubmit}
                 disabled={!state.title || !state.content}
               >
                 {SUBMIT_BUTTON_LABEL}
               </Button>
+              <BackButton/>
             </div>
           </div>
         </Form>

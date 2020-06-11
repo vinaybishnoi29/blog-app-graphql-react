@@ -14,3 +14,4 @@ export const VIEW_BUTTON_LABEL= 'View';
 export const BACK_BUTTON_LABEL= 'Back';
 export const POST_LIST_HEADING = 'Posts';
 export const CREATE_POST_BUTTON_LABEL = 'Create Post'
+export const EDIT_MODE = 'edit';

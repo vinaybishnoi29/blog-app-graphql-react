@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'reactstrap';
-import {BACK_BUTTON_LABEL} from '../constants';
+import {BACK_BUTTON_LABEL} from '../../constants'
 import { useHistory } from "react-router-dom";
 
 

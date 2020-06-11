@@ -1,12 +1,17 @@
-.PostList__Item {
+.PostList_Item {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     min-height:200px;
     height:400px;
+    margin-top: 40px;
 }
 .PostList__Heading {
     font-weight: 600;
+}
+
+.PostList {
+    margin-top: 50px;
 }
 
 .No_Posts {

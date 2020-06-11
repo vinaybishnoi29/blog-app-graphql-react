@@ -1,7 +1,7 @@
 import React from "react";
 import './PostList.css';
 import PostItem from "../PostItem";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button, Alert } from "reactstrap";
 import { Post } from '../../../../global/atoms/Post';
 import { POST_LIST_HEADING, CREATE_POST_BUTTON_LABEL } from "../../../../global/constants";
 
@@ -19,9 +19,9 @@ interface PostListProps {
 const getPostList = ({posts, editPost, deletePost, loading}: PostListProps) => {
   if (!posts.length && !loading) {
     return (
-      <h2 className="No_Posts">
+      <Alert color="info">
         No posts to show!!!
-      </h2>
+      </Alert>
     );
   }
   const list = posts.map((post) => {
@@ -62,7 +62,7 @@ const PostList:React.FC<PostListProps> = (props: PostListProps) => {
           </Col>
       </Row>
       <Row>
-        <Col className='PostList__Item'>
+        <Col className='PostList_Item'>
           {getPostList(props)}
         </Col>
       </Row>

@@ -1,13 +1,12 @@
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import {
   DELETE_POSTS,
   FETCH_POSTS,
   ADD_POST,
   UPDATE_POST,
-  FETCH_POST,
-} from "../gqlQueries";
+} from "../../gqlQueries";
 import { useHistory } from "react-router-dom";
-import { Post } from "../atoms/Post"
+import { Post } from "../../atoms/Post"
 
 interface Input {
   title: string;
@@ -23,9 +22,6 @@ interface Status {
   id: string;
   status: string;
 }
-interface Posts {
-  posts: Post[];
-}
 interface SinglePost {
   post: Post;
 }
@@ -37,18 +33,13 @@ interface SinglePost {
 // }
 
 /**
- * This contains use post hook
- * @returns posts
+ * @description This contains use post mutation hook
  * @returns deletePost
  * @returns createPost
  * @returns updatePost
  */
-export const usePost = () => {
+export const usePostMutation = () => {
   const history = useHistory();
-  let { loading: queryLoading, data } = useQuery<Posts>(FETCH_POSTS, {
-    onCompleted:()=>console.log("Get posts hook called"),
-    onError: (error) => console.log("Get posts",error),
-  });
 
   // Add the correct return type
   const [deletePost] = useMutation<Status, PostVar>(DELETE_POSTS, {
@@ -94,30 +85,9 @@ export const usePost = () => {
     ],
   });
 
-  const posts = data ? data.posts : [];
-
   return {
-    posts,
-    loading: queryLoading,
     deletePost: (id: string) => deletePost({ variables: { id } }),
     createPost: (title: string, content: string) => createPost({ variables: { title, content } }),
     updatePost: (id: string, title: string, content: string) => updatePost({ variables: { id, title, content } }),
   };
 };
-
-/**
- * @description This contains use post by id hook
- * @param id of type string
- * @returns post
- */
-export const usePostById = (id:string) => {
-  const { data: data_post } = useQuery<SinglePost, PostVar>(FETCH_POST, {
-    variables: { id },
-    onCompleted:()=>console.log("Get post hook called",id),
-    onError: (error) => console.log("Get post error",error),
-  });
-  const post = data_post ? data_post.post : new Post((id = ""), "", "");
-  return {
-    post
-  }
-}

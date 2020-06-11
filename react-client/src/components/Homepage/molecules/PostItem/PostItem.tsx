@@ -8,6 +8,7 @@ import {
     EDIT_BUTTON_LABEL,
     DELETE_BUTTON_LABEL
 } from '../../../../global/constants';
+// import {client} from '../../../../App';
 
 interface PostItemProps {
     key:string,
@@ -23,13 +24,14 @@ interface PostItemProps {
 const PostItem:React.FC<PostItemProps> = ({post,deletePost,editPost}: PostItemProps) => {
   const {id, title, content } = post;
   const history = useHistory()
-  const postContent = content.length > 150 ? `${content.substring(0,150)}...` : content;
+  const postContent = content.length > 250 ? `${content.substring(0,250)}...` : content;
 
 /**
  * @param id {string} id of the post to view
  * Navigates to posts/:id to display post details
  */
   const viewPostDetails = (id:string) => {
+    // client.writeData({ data: { id: id } })
     history.push(`/post/${id}`)
   }
 

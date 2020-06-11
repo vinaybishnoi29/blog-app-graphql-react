@@ -1,9 +1,9 @@
 import React from "react";
 import {RouteComponentProps} from 'react-router';
 import "./PostDetails.css";
-import { Container, Row, Col } from "reactstrap";
-import { usePostById } from "../../global/hooks";
-import BackButton from '../../global/atoms/BackButton';
+import { Container, Row, Col, Alert } from "reactstrap";
+import {usePostById} from '../../global/hooks/QueryHooks';
+import {BackButton, Loader} from '../../global/atoms';
 
 interface MatchParams {
   postId: string;
@@ -17,13 +17,25 @@ interface PostDetailProps extends RouteComponentProps<MatchParams> {
  */
 const PostDetails: React.FC<PostDetailProps> = (props: PostDetailProps) => {
   const { postId } = props.match.params;
-  const { post } = usePostById(postId);
-  
+  const { post, loading, error } = usePostById(postId);
+
+  if(loading) {
+    return (
+      <Loader loading={loading}/>
+    )
+  }
+  if(error) {
+    return (
+      <Alert color="danger" className="error_alert">
+        Some error occurred!!!
+      </Alert>
+    )
+  }
   return (
     <Container className="BlogDetail">
       <Row>
         <Col>
-          <h2 className="BlogDetail_Title">{post.title}</h2>
+          <h1 className="BlogDetail_Title">{post.title}</h1>
           <p className="BlogDetail_Content">{post.content}</p>
         </Col>
       </Row>

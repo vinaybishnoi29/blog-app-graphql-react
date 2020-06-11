@@ -44,3 +44,9 @@ query fetchPost($id: ID!) {
   }
 }
 `;
+
+export const FETCH_ID = gql`
+  {
+    postId @client
+  }
+`;
