@@ -1,14 +1,12 @@
 import React from "react";
 import PostList from "./molecules/PostList";
 import { useHistory } from "react-router-dom";
-import { usePost } from "../../global/hooks";
 
 /**
  * Homepage displays {@linkcode PostList} PostList Component
  */
 const Homepage: React.FC = () => {
   const history = useHistory();
-  const { posts, loading, deletePost } = usePost();
 
   /**
  * Navigates to edit post page for input id.
@@ -29,10 +27,7 @@ const Homepage: React.FC = () => {
     <div>
       <PostList
         editPost={updatePostHandler}
-        deletePost={deletePost}
         addPost={addPostHandler}
-        posts={posts}
-        loading={loading}
       />
     </div>
   );

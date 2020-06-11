@@ -37,7 +37,7 @@ interface SinglePost {
  * @returns posts
  */
 export const usePosts = () => {
-  let { loading, data } = useQuery<Posts>(FETCH_POSTS, {
+  let { loading, data, error } = useQuery<Posts>(FETCH_POSTS, {
     onCompleted:()=>console.log("Get posts hook called"),
     onError: (error) => console.log("Get posts",error),
   });
@@ -46,7 +46,8 @@ export const usePosts = () => {
 
   return {
     posts,
-    loading
+    loading,
+    error
   };
 };
 

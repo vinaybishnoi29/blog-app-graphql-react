@@ -47,7 +47,7 @@ const PostItem:React.FC<PostItemProps> = ({post,deletePost,editPost}: PostItemPr
             <div className='PostItem_Card_Button_Container'>
                 <Button
                   outline
-                  color="primary"
+                  color="info"
                   className='PostItem_Card_Button_view'
                   onClick={()=>viewPostDetails(id)}
                 > 
@@ -55,7 +55,7 @@ const PostItem:React.FC<PostItemProps> = ({post,deletePost,editPost}: PostItemPr
                 </Button>
                 <Button
                   outline
-                  color="primary"
+                  color="info"
                   className='PostItem_Card_Button_edit'
                   onClick={()=>editPost(id)}
                 > 
@@ -63,7 +63,7 @@ const PostItem:React.FC<PostItemProps> = ({post,deletePost,editPost}: PostItemPr
                 </Button>
                 <Button 
                   outline
-                  color="primary"
+                  color="info"
                   className='PostItem_Card_Button_delete' 
                   onClick={()=>deletePost(id)}
                 >

@@ -3,7 +3,7 @@ import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { fetchPost } from "../../global/request";
 import { useLocation, useParams } from "react-router-dom";
 import './CreatePost.css';
-import { usePost } from "../../global/hooks";
+import { usePostMutation } from "../../global/hooks";
 import BackButton from '../../global/atoms/BackButton';
 import {
   EDIT_POST_LABEL,
@@ -41,7 +41,7 @@ const useQuery = (): URLSearchParams => {
 };
 
 const CreatePost: React.FC = () => {
-  const { updatePost, createPost } = usePost();
+  const { updatePost, createPost } = usePostMutation();
   const [state, dispatch] = useReducer(reducer, initialState);
   const query: URLSearchParams | null = useQuery();
   let { postId } = useParams();
@@ -101,6 +101,7 @@ const CreatePost: React.FC = () => {
           </FormGroup>
           <div className="field">
             <div className="control">
+              <BackButton/>
               <Button
                 className="button_submit"
                 color="info"
@@ -110,7 +111,6 @@ const CreatePost: React.FC = () => {
               >
                 {SUBMIT_BUTTON_LABEL}
               </Button>
-              <BackButton/>
             </div>
           </div>
         </Form>
