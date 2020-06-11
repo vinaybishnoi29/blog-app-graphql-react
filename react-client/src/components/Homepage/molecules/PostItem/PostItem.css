@@ -1,0 +1,37 @@
+.PostItem {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border:1px solid #dedede;
+    border-radius: 2px;
+    box-shadow: 3px 3px #dedede;
+    align-items: flex-start;
+    padding: 10px;
+    justify-content: space-between;
+    margin:20px;
+    min-height: 100px;
+    width:500px;
+    height:250px;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+.PostItem_Card {
+  padding-left: 20px;
+}
+.PostItem_Card_Heading {
+    width: 500px;
+    min-height: 70px;
+    font-weight: 600;
+}
+.PostItem_Card_content {
+    max-width:500px;
+    min-height:80px;
+    font-weight:400;
+}
+.PostItem_Card_Button_Container {
+    display: flex;
+    flex-wrap: nowrap;
+}
+.PostItem_Card_Button_edit, .PostItem_Card_Button_delete, .PostItem_Card_Button_view {
+    margin: 20px 20px 0 0;
+}

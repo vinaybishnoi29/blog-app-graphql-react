@@ -1,0 +1,17 @@
+.BlogDetail {
+    min-height:500px;
+    font-family: 'Open Sans', sans-serif;
+}
+.BlogDetail_Title {
+    font-weight: 800;
+}
+.BlogDetail_Content {
+    font-weight: 400;
+}
+.BlogDetail .BlogDetail_Content {
+    border:1px solid #dedede;
+    padding: 10px;
+    height:500px;
+    overflow-y: scroll;
+
+}
